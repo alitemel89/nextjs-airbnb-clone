@@ -12,6 +12,8 @@ import Modal from "./Modal";
 import Heading from "../Heading";
 import Input from "../inputs/Input";
 import { useForm, FieldValues, SubmitHandler } from "react-hook-form";
+import axios from "axios";
+import { toast } from "react-hot-toast";
 
 const RegisterModal = () => {
   const registerModal = useRegisterModal();
@@ -32,7 +34,17 @@ const RegisterModal = () => {
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
 
-    console.log(data)
+    axios.post('/api/register', data)
+    .then(() => {
+      toast.success('Registered!');
+      registerModal.onClose();
+    })
+    .catch((error) => {
+      toast.error(error);
+    })
+    .finally(() => {
+      setIsLoading(false);
+    })
   }
   
   const onToggle = useCallback(() => {
@@ -53,6 +65,15 @@ const RegisterModal = () => {
       <Input
         id="name"
         label="Name"
+        disabled={isLoading}
+        register={register}
+        errors={errors}
+        required
+      />
+      <Input
+        id="password"
+        label="Password"
+        type="password"
         disabled={isLoading}
         register={register}
         errors={errors}
