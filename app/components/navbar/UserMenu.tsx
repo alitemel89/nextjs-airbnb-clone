@@ -1,19 +1,48 @@
 "use client";
 import { AiOutlineMenu } from "react-icons/ai";
 import Avatar from "../Avatar";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import MenuItem from "./MenuItem";
 import useRegisterModal from "@/app/hooks/useRegisterModal";
+import useLoginModal from "@/app/hooks/useLoginModal";
 
 const UserMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const registerModal = useRegisterModal();
+  const loginModal = useLoginModal();
+
+  const menuRef = useRef<HTMLDivElement | null>(null);
+
   const toggleOpen = useCallback(() => {
     setIsOpen((value) => !value);
   }, [isOpen]);
 
+  const handleClickOutside = useCallback(
+    (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    },
+    []
+  );
+
+  useEffect(() => {
+    if (isOpen) {
+      // Add event listener to the window when the menu is open
+      window.addEventListener("click", handleClickOutside);
+    } else {
+      // Remove event listener when the menu is closed to avoid unnecessary checks
+      window.removeEventListener("click", handleClickOutside);
+    }
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("click", handleClickOutside);
+    };
+  }, [isOpen, handleClickOutside]);
+
   return (
-    <div className="relative">
+    <div className="relative" ref={menuRef}>
       <div className="flex flex-row items-center gap-3">
         <div
           onClick={() => {}}
@@ -37,15 +66,15 @@ const UserMenu = () => {
         </div>
       </div>
 
-      {isOpen  && (
-        <div className="absolute rounded-xl shadow-md
-        w-[40vw] text-sm overflow-hidden right-0 top-12 md:w-3/4">
+      {isOpen && (
+        <div
+          className="absolute rounded-xl shadow-md
+        w-[40vw] text-sm overflow-hidden right-0 top-12 md:w-3/4"
+        >
           <div className="flex flex-col cursor-pointer">
             <>
-            <MenuItem 
-                  label="Sign up" 
-                  onClick={registerModal.onOpen}
-                />
+              <MenuItem label="Sign up" onClick={registerModal.onOpen} />
+              <MenuItem label="Log in" onClick={loginModal.onOpen} />
             </>
           </div>
         </div>

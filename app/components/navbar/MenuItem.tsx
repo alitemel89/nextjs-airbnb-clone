@@ -15,9 +15,10 @@ const MenuItem: React.FC<MenuItemProps> = ({
       className="
         px-4 
         py-3 
-        hover:bg-neutral-100 
+        hover:bg-zinc-100
         transition
         font-semibold
+        bg-slate-50
       "
     >
       {label}
