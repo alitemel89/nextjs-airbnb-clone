@@ -5,6 +5,17 @@ export async function getSession() {
   return await getServerSession(authOptions);
 }
 
+export interface IListingsParams {
+  userId?: string;
+  guestCount?: number;
+  roomCount?: number;
+  bathroomCount?: number;
+  startDate?: string;
+  endDate?: string;
+  locationValue?: string;
+  category?: string;
+}
+
 export default async function getCurrentUser() {
   try {
     const session = await getSession();

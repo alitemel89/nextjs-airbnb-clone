@@ -14,9 +14,11 @@ import Input from "../inputs/Input";
 import { useForm, FieldValues, SubmitHandler } from "react-hook-form";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import useLoginModal from "@/app/hooks/useLoginModal";
 
 const RegisterModal = () => {
   const registerModal = useRegisterModal();
+  const loginModal = useLoginModal();
   const [isLoading, setIsLoading] = useState(false);
 
   const {
@@ -47,9 +49,10 @@ const RegisterModal = () => {
     })
   }
   
-  const onToggle = useCallback(() => {
+  const toggle = useCallback(() => {
+    loginModal.onOpen()
     registerModal.onClose();
-  }, [registerModal]);
+  }, [loginModal, registerModal])
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
@@ -108,7 +111,7 @@ const RegisterModal = () => {
         <p>
           Already have an account?
           <span
-            onClick={onToggle}
+            onClick={toggle}
             className="
               text-neutral-800
               cursor-pointer 

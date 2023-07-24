@@ -34,6 +34,11 @@ const LoginModal = () => {
     },
   });
 
+  const toggle = useCallback(() => {
+    loginModal.onClose()
+    registerModal.onOpen();
+  }, [loginModal, registerModal])
+
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
 
@@ -54,9 +59,6 @@ const LoginModal = () => {
     });
   };
 
-  const onToggle = useCallback(() => {
-    loginModal.onClose();
-  }, [loginModal]);
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
@@ -105,9 +107,9 @@ const LoginModal = () => {
         "
       >
         <p>
-          Already have an account?
+          First time using Airbnb?
           <span
-            onClick={onToggle}
+            onClick={toggle}
             className="
               text-neutral-800
               cursor-pointer 
@@ -115,7 +117,7 @@ const LoginModal = () => {
             "
           >
             {" "}
-            Log in
+            Sign up
           </span>
         </p>
       </div>

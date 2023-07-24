@@ -2,9 +2,14 @@ import Container from "@/app/components/Container";
 
 
 import ClientOnly from "./components/ClientOnly";
+import getListings, { IListingsParams } from "./actions/getListings";
 
+interface HomeProps {
+  searchParams: IListingsParams
+};
 
-const Home =  () => {
+const Home =  async ({ searchParams }: HomeProps) => {
+  const listings = await getListings(searchParams);
   return (
     <ClientOnly>
       <Container>
