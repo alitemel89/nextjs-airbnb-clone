@@ -1,4 +1,37 @@
 @tailwind base;
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+}
+
+/* Chrome, Edge, and Safari */
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  width: 5px;
+  height: 5px;
+  border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+
 @tailwind components;
 @tailwind utilities;
 
@@ -8,6 +41,8 @@ body,
 :root {
   height: 100%;
 }
+
+
 
 
 
